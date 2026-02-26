@@ -1,0 +1,29 @@
+{
+  "itemId" : "_a4ShEBJKEfGRkrHI23-GRg",
+  "contextList" : [ {
+    "contextName" : "Default",
+    "repoId" : "_PpL1sAgVEfGkwdbzVWGo6w",
+    "parameterList" : [ {
+      "id" : "_s4HMkRJeEfGRkrHI23-GRg",
+      "name" : "FileContent"
+    }, {
+      "id" : "_s4HMkBJeEfGRkrHI23-GRg",
+      "name" : "FileName"
+    }, {
+      "id" : "_s4HMkhJeEfGRkrHI23-GRg",
+      "name" : "sftp_host"
+    }, {
+      "id" : "_s4HMlRJeEfGRkrHI23-GRg",
+      "name" : "sftp_password"
+    }, {
+      "id" : "_s4HMkxJeEfGRkrHI23-GRg",
+      "name" : "sftp_port"
+    }, {
+      "id" : "_s4HMlhJeEfGRkrHI23-GRg",
+      "name" : "sftp_remote_dir"
+    }, {
+      "id" : "_s4HMlBJeEfGRkrHI23-GRg",
+      "name" : "sftp_user"
+    } ]
+  } ]
+}

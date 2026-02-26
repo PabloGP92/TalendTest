@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TalendMetadata:DatabaseConnection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmi:id="_pSC-8AJyEfG6Eu58Pu0rmw" name="TWC_Database" id="_7DWS0AJxEfG6Eu58Pu0rmw" label="TWC_Database" DatabaseType="Microsoft SQL Server" DriverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://192.168.178.50\sqlexpress:1433;DatabaseName=TWCREPLICA;" dbVersionString="MSSQL_PROP" Port="1433" Username="pablo.garciap@vasscompany.com" Password="enc:system.encryption.key.v1:d6WpolON3+mCb/02JEyWwuizrdxjFEHhCzHo19g1aiGXgJvzYQ==" ServerName="192.168.178.50\sqlexpress" DatasourceName="" FileFieldName="" SID="TWCREPLICA" SqlSynthax="" StringQuote="" NullChar="" DbmsId="id_MSSQL" ProductId="SQL_SERVER" AdditionalParams="" StandardSQL="true" SQLMode="false" UiSchema="" supportNLS="false">
+  <taggedValue xmi:id="_pSENEAJyEfG6Eu58Pu0rmw" tag="Is Conn Need Reload" value="false"/>
+  <taggedValue xmi:id="_pStGQAJyEfG6Eu58Pu0rmw" tag="package filter" value=""/>
+  <taggedValue xmi:id="_pS3eUAJyEfG6Eu58Pu0rmw" tag="Status" value=""/>
+  <taggedValue xmi:id="_pS3eUQJyEfG6Eu58Pu0rmw" tag="Version" value="0.1"/>
+  <taggedValue xmi:id="_pS3eUgJyEfG6Eu58Pu0rmw" tag="Purpose" value=""/>
+  <taggedValue xmi:id="_pS3eUwJyEfG6Eu58Pu0rmw" tag="Description" value=""/>
+  <taggedValue xmi:id="_pS3eVAJyEfG6Eu58Pu0rmw" tag="Author" value=""/>
+  <taggedValue xmi:id="_pS3eVQJyEfG6Eu58Pu0rmw" tag="otherParameter"/>
+  <parameters xmi:id="_vDDpYAJ0EfG6Eu58Pu0rmw" key="CONN_PARA_KEY_MAPRDB_TABLE_NS_MAPPING" value=""/>
+  <parameters xmi:id="_wzY-kAJ0EfG6Eu58Pu0rmw" key="CONN_PARA_KEY_USERNAME" value="pablo.garciap@vasscompany.com"/>
+</TalendMetadata:DatabaseConnection>

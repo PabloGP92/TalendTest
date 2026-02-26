@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010">
+  <TalendMetadata:GenericSchemaConnection xmi:id="_Tyo-kAXJEfGGYeU19zKVwg" comment="connectionComment" label="connectionLabel" dataPackage="_Tyo-kQXJEfGGYeU19zKVwg"/>
+  <TalendMetadata:GenericPackage xmi:id="_Tyo-kQXJEfGGYeU19zKVwg" dataManager="_Tyo-kAXJEfGGYeU19zKVwg">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_Tyo-kgXJEfGGYeU19zKVwg" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-kwXJEfGGYeU19zKVwg" name="Migration_ID" id="42150" label="Migration_ID" length="-1" precision="-1" sourceType="" talendType="id_String" nullable="false">
+        <initialValue xmi:id="_Tyo-lAXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-lQXJEfGGYeU19zKVwg" name="TWC_Document" id="42151" label="TWC_Document" length="-1" precision="-1" sourceType="" talendType="id_String" nullable="false">
+        <initialValue xmi:id="_Tyo-lgXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-lwXJEfGGYeU19zKVwg" name="TWC_Document_Type" id="42152" label="TWC_Document_Type" length="-1" precision="-1" sourceType="" talendType="id_String" nullable="false">
+        <initialValue xmi:id="_Tyo-mAXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-mQXJEfGGYeU19zKVwg" name="Name" id="42153" label="Name" length="-1" precision="-1" sourceType="" talendType="id_String" nullable="false">
+        <initialValue xmi:id="_Tyo-mgXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-mwXJEfGGYeU19zKVwg" name="Legal_Name" id="42154" label="Legal_Name" length="-1" precision="-1" sourceType="" talendType="id_String">
+        <initialValue xmi:id="_Tyo-nAXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-nQXJEfGGYeU19zKVwg" name="BillingStreet" id="42155" label="BillingStreet" length="-1" precision="-1" sourceType="" talendType="id_String">
+        <initialValue xmi:id="_Tyo-ngXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-nwXJEfGGYeU19zKVwg" name="BillingCity" id="42157" label="BillingCity" length="-1" precision="-1" sourceType="" talendType="id_String">
+        <initialValue xmi:id="_Tyo-oAXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-oQXJEfGGYeU19zKVwg" name="BillingState" id="42158" label="BillingState" length="-1" precision="-1" sourceType="" talendType="id_String">
+        <initialValue xmi:id="_Tyo-ogXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-owXJEfGGYeU19zKVwg" name="BillingCountry" id="42159" label="BillingCountry" length="-1" precision="-1" sourceType="" talendType="id_String">
+        <initialValue xmi:id="_Tyo-pAXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-pQXJEfGGYeU19zKVwg" name="RecordType" id="42160" label="RecordType" length="-1" precision="-1" sourceType="" talendType="id_String" nullable="false">
+        <initialValue xmi:id="_Tyo-pgXJEfGGYeU19zKVwg"/>
+      </feature>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_Tyo-pwXJEfGGYeU19zKVwg" name="Active" id="42161" label="Active" length="-1" precision="-1" sourceType="" talendType="id_Boolean" nullable="false">
+        <initialValue xmi:id="_Tyo-qAXJEfGGYeU19zKVwg"/>
+      </feature>
+    </ownedElement>
+  </TalendMetadata:GenericPackage>
+</xmi:XMI>

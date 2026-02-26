@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_PpewoAgVEfGkwdbzVWGo6w" confirmationNeeded="false" hide="false" name="Default">
+  <contextParameter xmi:id="_s4HMkBJeEfGRkrHI23-GRg" comment="" name="FileName" prompt="FileName?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
+  <contextParameter xmi:id="_s4HMkRJeEfGRkrHI23-GRg" comment="" name="FileContent" prompt="FileContent?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
+  <contextParameter xmi:id="_s4HMkhJeEfGRkrHI23-GRg" comment="" name="sftp_host" prompt="sftp_host?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
+  <contextParameter xmi:id="_s4HMkxJeEfGRkrHI23-GRg" comment="" name="sftp_port" prompt="sftp_port?" promptNeeded="false" repositoryContextId="built-in" type="id_Integer" value=""/>
+  <contextParameter xmi:id="_s4HMlBJeEfGRkrHI23-GRg" comment="" name="sftp_user" prompt="sftp_user?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
+  <contextParameter xmi:id="_s4HMlRJeEfGRkrHI23-GRg" comment="" name="sftp_password" prompt="sftp_password?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
+  <contextParameter xmi:id="_s4HMlhJeEfGRkrHI23-GRg" comment="" name="sftp_remote_dir" prompt="sftp_remote_dir?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
+</talendfile:ContextType>

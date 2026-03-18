@@ -1,0 +1,10 @@
+PaymentMethod,PaymentCode
+Domiciliacion CORE,1
+Domiciliacion B2B,2
+Transfer Bank,3
+Multibanco,4
+Promissory Note,5
+Non-Order Promissory Note,6
+Letra,7
+Pagaré a la Orden no normalizado,8
+Pagaré No a la Orden no normalizado,9

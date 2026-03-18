@@ -1,5 +1,59 @@
 [ {
   "baseItem" : {
+    "id" : "_7y2ncB3sEfGGtMRnAo6OKQ",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_CLwP4CEyEfG2-YcpSve7og",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_v4MxMCH7EfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_zYJcUCIbEfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
     "id" : "_QKNNUGZ8EeWm5YvsrIoYzQ",
     "version" : "0.1",
     "type" : "job"
@@ -27,6 +81,48 @@
   } ]
 }, {
   "baseItem" : {
+    "id" : "_YWta8BunEfGrP9qZGwtmZQ",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "__slB8BF-EfGNEeSng-1XHw",
+    "version" : "Latest",
+    "type" : "property"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_ZLtOcB4GEfGGtMRnAo6OKQ",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
     "id" : "_a4ShEBJKEfGRkrHI23-GRg",
     "version" : "0.1",
     "type" : "job"
@@ -35,6 +131,67 @@
     "id" : "_PpL1sAgVEfGkwdbzVWGo6w",
     "version" : "Latest",
     "type" : "context"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_ecknAB1JEfGfnajHmPudaA",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_gX92UB1BEfGfnajHmPudaA",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_tNFz4BxrEfGIW_xthwcR7Q",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
   } ]
 }, {
   "baseItem" : {

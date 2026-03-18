@@ -1,0 +1,534 @@
+package routines;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * Talend Java Routine: FactoringFileGenerator
+ *
+ * Builds positional flat file names and record lines for the
+ * DEU (Debtor) and ACR (Creditor) Factoring files.
+ *
+ * All Salesforce data is expected to be queried upstream via
+ * tSalesforceInput components and passed in as plain strings.
+ *
+ * USAGE FROM tJava:
+ *
+ *   // Build filename once at job start:
+ *   String deuFileName = FactoringFileGenerator.buildFileName("DEU");
+ *   String acrFileName = FactoringFileGenerator.buildFileName("ACR");
+ *
+ *   // Build one DEU line per debtor row (inside tJava in the debtor flow):
+ *   String line = FactoringFileGenerator.buildDeuLine(
+ *       row1.TWC_Document__c,           // ID_DEUDOR
+ *       row1.AccountName,               // NOMBRE
+ *       row1.TWC_CNAE_Code__r_Name,     // GRUPO_CNAE
+ *       row1.BillingPostalCode,         // CODIGO_POSTAL
+ *       row1.TWC_Defaulted_Account__c,  // IMPAGO  (boolean as String "true"/"false")
+ *       row1.LLC_BI__Booked_Date__c,    // FECHA_TOMA_RAZON (YYYY-MM-DD)
+ *       row1.BillingCountry,            // PAIS
+ *       row1.CreditorDocument,          // ID_ACREEDOR (from creditor account)
+ *       row1.TWC_Grade__c,              // GRADE_EULER
+ *       row1.TWC_Sales_Volume__c,       // VOLUMEN_VENTAS
+ *       row1.TWC_D_B_Rating__c,         // RATING D&B
+ *       row1.TWC_Code__c,               // DEDUORTWC
+ *       row1.HouseholdCode,             // GRUPO
+ *       row1.TWC_SIC__c,                // SIC
+ *       row1.TWC_CodAllianz__c,         // DEUDOREULER
+ *       row1.TWC_Cartan__c,             // DEUDORCARTAN
+ *       row1.HouseholdName              // NOMBRE_GRUPO
+ *   );
+ *
+ *   // Build one ACR line per creditor row (inside tJava in the creditor flow):
+ *   String line = FactoringFileGenerator.buildAcrLine(
+ *       row2.TWC_Document__c,           // ID_ACREEDOR
+ *       row2.AccountName,               // NOMBRE
+ *       row2.TWC_CNAE_Code__r_Name,     // GRUPO_CNAE
+ *       row2.BillingPostalCode,         // CODIGO_POSTAL
+ *       row2.BillingCountry,            // PAIS
+ *       row2.TWC_Code__c,               // ACREEDORTWC
+ *       row2.HouseholdCode,             // GRUPO
+ *       row2.TWC_SIC__c,                // SIC
+ *       row2.HouseholdName              // NOMBRE_GRUPO
+ *   );
+ */
+public class FactoringFileGenerator {
+
+    private static final String FUND_PREFIX    = "TITU7325_CA9986";
+    private static final int    DEU_RECORD_LENGTH = 475;
+    private static final int    ACR_RECORD_LENGTH = 373;
+
+
+    // =======================================================
+    //  FILE NAME
+    // =======================================================
+
+    /**
+     * Builds the output filename for the given file type.
+     * Pattern: {type}_TITU7325_CA9986_F{YYMMDD}_H{HHmmss}.txt
+     * Example: DEU_TITU7325_CA9986_F250918_H161111.txt
+     *
+     * @param fileType  "DEU" or "ACR"
+     */
+    public static String buildFileName(String fileType) {
+        Date now = new Date();
+        String datePart = new SimpleDateFormat("yyMMdd").format(now);
+        String timePart = new SimpleDateFormat("HHmmss").format(now);
+        return fileType + "_" + FUND_PREFIX + "_F" + datePart + "_H" + timePart + ".txt";
+    }
+
+
+    // =======================================================
+    //  DEU LINE BUILDER  (total = 475 chars)
+    // =======================================================
+    /**
+     * Builds one positional DEU (Debtor) record.
+     *
+     * Field layout (1-based positions):
+     *   Pos   1 -   8  (  8)  FECHA_DATOS       Today YYYYMMDD (auto-generated)
+     *   Pos   9 -  43  ( 35)  ID_DEUDOR         Account.TWC_Document__c
+     *   Pos  44 - 193  (150)  NOMBRE            Account.Name
+     *   Pos 194 - 196  (  3)  GRUPO_CNAE        Account.TWC_CNAE_Code__r.Name
+     *   Pos 197 - 205  (  9)  CODIGO_POSTAL     Account.BillingPostalCode
+     *   Pos 206 - 206  (  1)  IMPAGO            Account.TWC_Defaulted_Account__c (1/0)
+     *   Pos 207 - 214  (  8)  FECHA_TOMA_RAZON  LLC_BI__Loan__c.LLC_BI__Booked_Date__c
+     *   Pos 215 - 217  (  3)  PAIS              Account.BillingCountry
+     *   Pos 218 - 252  ( 35)  ID_ACREEDOR       Creditor Account.TWC_Document__c
+     *   Pos 253 - 254  (  2)  GRADE_EULER       Account.TWC_Grade__c
+     *   Pos 255 - 266  ( 12)  VOLUMEN_VENTAS    Account.TWC_Sales_Volume__c
+     *   Pos 267 - 270  (  4)  RATING_DB         Account.TWC_D_B_Rating__c
+     *   Pos 271 - 275  (  5)  DEDUORTWC         Account.TWC_Code__c
+     *   Pos 276 - 281  (  6)  GRUPO             Household connected-from name (6 chars)
+     *   Pos 282 - 285  (  4)  SIC               Account.TWC_SIC__c
+     *   Pos 286 - 305  ( 20)  DEUDOREULER       Account.TWC_CodAllianz__c
+     *   Pos 306 - 325  ( 20)  DEUDORCARTAN      Account.TWC_Cartan__c
+     *   Pos 326 - 475  (150)  NOMBRE_GRUPO      Household connected-from full name
+     */
+    public static String buildDeuLine(
+            String idDeudor,
+            String nombre,
+            String grupoCnae,
+            String codigoPostal,
+            String impago,
+            String fechaTomRazon,
+            String pais,
+            String idAcreedor,
+            String gradeEuler,
+            String volumenVentas,
+            String ratingDB,
+            String deudorTwc,
+            String grupo,
+            String sic,
+            String deudorEuler,
+            String deudorCartan,
+            String nombreGrupo) {
+
+        StringBuilder sb = new StringBuilder(DEU_RECORD_LENGTH);
+
+        appendAlpha(sb, today(),                        8);   //   1-  8  FECHA_DATOS
+        appendAlpha(sb, idDeudor,                      35);   //   9- 43  ID_DEUDOR
+        appendAlpha(sb, nombre,                       150);   //  44-193  NOMBRE
+        appendAlpha(sb, grupoCnae,                      3);   // 194-196  GRUPO_CNAE
+        appendAlpha(sb, codigoPostal,                   9);   // 197-205  CODIGO_POSTAL
+        sb.append(toImpago(impago));                           // 206      IMPAGO
+        appendAlpha(sb, toDate(fechaTomRazon),          8);   // 207-214  FECHA_TOMA_RAZON
+        appendAlpha(sb, COUNTRY_CODES.get(pais),        3);   // 215-217  PAIS
+        appendAlpha(sb, idAcreedor,                    35);   // 218-252  ID_ACREEDOR
+        appendAlpha(sb, toInt(gradeEuler),              2);   // 253-254  GRADE_EULER
+        appendVolumenVentas(sb, volumenVentas,         12);   // 255-266  VOLUMEN_VENTAS
+        appendAlpha(sb, ratingDB,                       4);   // 267-270  RATING_DB
+        appendAlpha(sb, deudorTwc,                      5);   // 271-275  DEDUORTWC
+        appendAlpha(sb, grupo,                          6);   // 276-281  GRUPO
+        appendAlpha(sb, toInt(sic),                     4);   // 282-285  SIC
+        appendAlpha(sb, toInt(deudorEuler),            20);   // 286-305  DEUDOREULER
+        appendAlpha(sb, toInt(deudorCartan),           20);   // 306-325  DEUDORCARTAN
+        appendAlpha(sb, nombreGrupo,                  150);   // 326-475  NOMBRE_GRUPO
+        
+        return padOrTruncate(sb.toString(), DEU_RECORD_LENGTH);
+    }
+
+
+    // =======================================================
+    //  ACR LINE BUILDER  (total = 373 chars)
+    // =======================================================
+    /**
+     * Builds one positional ACR (Creditor) record.
+     *
+     * Field layout (1-based positions):
+     *   Pos   1 -   8  (  8)  FECHA_DATOS    Today YYYYMMDD (auto-generated)
+     *   Pos   9 -  43  ( 35)  ID_ACREEDOR    Account.TWC_Document__c
+     *   Pos  44 - 193  (150)  NOMBRE         Account.Name
+     *   Pos 194 - 196  (  3)  GRUPO_CNAE     Account.TWC_CNAE_Code__r.Name
+     *   Pos 197 - 205  (  9)  CODIGO_POSTAL  Account.BillingPostalCode
+     *   Pos 206 - 208  (  3)  PAIS           Account.BillingCountry
+     *   Pos 209 - 213  (  5)  ACREEDORTWC    Account.TWC_Code__c
+     *   Pos 214 - 219  (  6)  GRUPO          Household connected-from name (6 chars)
+     *   Pos 220 - 223  (  4)  SIC            Account.TWC_SIC__c
+     *   Pos 224 - 373  (150)  NOMBRE_GRUPO   Household connected-from full name
+     */
+    public static String buildAcrLine(
+            String idAcreedor,
+            String nombre,
+            String grupoCnae,
+            String codigoPostal,
+            String pais,
+            String acreedorTwc,
+            String grupo,
+            String sic,
+            String nombreGrupo) {
+
+        StringBuilder sb = new StringBuilder(ACR_RECORD_LENGTH);
+
+        appendAlpha(sb, today(),       8);   //   1-  8  FECHA_DATOS
+        appendAlpha(sb, idAcreedor,   35);   //   9- 43  ID_ACREEDOR
+        appendAlpha(sb, nombre,      150);   //  44-193  NOMBRE
+        appendAlpha(sb, grupoCnae,     3);   // 194-196  GRUPO_CNAE
+        appendAlpha(sb, codigoPostal,  9);   // 197-205  CODIGO_POSTAL
+        appendAlpha(sb, COUNTRY_CODES.get(pais), 3);   // 206-208  PAIS
+        appendAlpha(sb, acreedorTwc,   5);   // 209-213  ACREEDORTWC
+        appendAlpha(sb, grupo,         6);   // 214-219  GRUPO
+        appendAlpha(sb, toInt(sic),    4);   // 220-223  SIC
+        appendAlpha(sb, nombreGrupo, 150);   // 224-373  NOMBRE_GRUPO
+
+        return padOrTruncate(sb.toString(), ACR_RECORD_LENGTH);
+    }
+
+
+    // =======================================================
+    //  PRIVATE HELPERS
+    // =======================================================
+
+    /** Returns today as YYYYMMDD. */
+    private static String today() {
+        return new SimpleDateFormat("yyyyMMdd").format(new Date());
+    }
+
+    /**
+     * Converts a Salesforce date (YYYY-MM-DD) to YYYYMMDD.
+     * Returns 8 spaces if null or empty.
+     */
+    private static String toDate(String sfDate) {
+        if (sfDate == null || sfDate.trim().isEmpty()) return "        ";
+        return sfDate.trim().replace("-", "").substring(0, 8);
+    }
+
+    /**
+     * Converts a boolean-as-string to "1" (true) or "0" (false).
+     * Handles "true"/"false" strings from Salesforce.
+     */
+    private static char toImpago(String value) {
+        return "true".equalsIgnoreCase(value == null ? "" : value.trim()) ? '1' : '0';
+    }
+
+    /**
+     * Converts a Salesforce Double field (e.g. "1234.0") to a plain integer string.
+     * Returns empty string for null or unparseable input.
+     */
+    private static String toInt(String raw) {
+        if (raw == null || raw.trim().isEmpty()) return "";
+        try {
+            return String.valueOf(Math.round(Double.parseDouble(raw.trim())));
+        } catch (NumberFormatException e) {
+            return raw.trim();
+        }
+    }
+
+    /**
+     * Left-aligns value in a field of exactly size characters, space-padded on the right.
+     * Truncates if longer than size. Null treated as empty.
+     */
+    private static void appendAlpha(StringBuilder sb, String value, int size) {
+        String v = value == null ? "" : value.trim();
+        if (v.length() > size) v = v.substring(0, size);
+        sb.append(v);
+        for (int i = v.length(); i < size; i++) sb.append(' ');
+    }
+
+    /**
+     * Formats VOLUMEN_VENTAS: sign character (+/-) followed by zero-padded digits.
+     * Total width = 12. Example: 490866 -> "+00000490866"
+     * Fills with spaces if value is null or unparseable.
+     */
+    private static void appendVolumenVentas(StringBuilder sb, String raw, int size) {
+        if (raw == null || raw.trim().isEmpty()) {
+            for (int i = 0; i < size; i++) sb.append(' ');
+            return;
+        }
+        try {
+            long val = Math.round(Double.parseDouble(raw.trim()));
+            String digits = String.format("%0" + size + "d", Math.abs(val));
+            if (digits.length() > size) digits = digits.substring(digits.length() - size);
+            sb.append(digits);
+        } catch (NumberFormatException e) {
+            for (int i = 0; i < size; i++) sb.append(' ');
+        }
+    }
+
+    /** Pads with spaces or truncates to exactly targetLength characters. */
+    private static String padOrTruncate(String s, int targetLength) {
+        if (s.length() == targetLength) return s;
+        if (s.length() > targetLength)  return s.substring(0, targetLength);
+        StringBuilder sb = new StringBuilder(s);
+        while (sb.length() < targetLength) sb.append(' ');
+        return sb.toString();
+    }
+    
+ // Static lookup map: country name (uppercase, trimmed) -> 3-digit code
+    private static final java.util.Map<String, String> COUNTRY_CODES = new java.util.HashMap<String, String>() {{
+        put("ES",                               "011");
+        put("PORTUGAL",                         "010");
+        put("AFGANISTAN",                       "660");
+        put("ALBANIA",                          "070");
+        put("ALEMANIA",                         "004");
+        put("ANDORRA",                          "043");
+        put("ANGOLA",                           "330");
+        put("ANGUILA",                          "446");
+        put("ANTARTIDA",                        "891");
+        put("ANTIGUA Y BARBUDA",                "459");
+        put("ANTILLAS NEERLANDESAS",            "478");
+        put("ARABIA SAUDI",                     "632");
+        put("ARGELIA",                          "208");
+        put("ARGENTINA",                        "528");
+        put("ARMENIA",                          "077");
+        put("ARUBA",                            "474");
+        put("AUSTRALIA",                        "800");
+        put("AUSTRIA",                          "038");
+        put("AZERBAIYAN",                       "078");
+        put("BAHAMAS",                          "453");
+        put("BAHREIN",                          "640");
+        put("BANGLADESH",                       "666");
+        put("BARBADOS",                         "469");
+        put("BELGICA",                          "017");
+        put("BELICE",                           "421");
+        put("BENIN",                            "284");
+        put("BERMUDAS",                         "413");
+        put("BIELORRUSIA",                      "073");
+        put("BOLIVIA",                          "516");
+        put("BOSNIA-HERZEGOVINA",               "093");
+        put("BOTSUANA",                         "391");
+        put("BOUVET, ISLA",                     "892");
+        put("BRASIL",                           "508");
+        put("BRUNEI",                           "703");
+        put("BULGARIA",                         "068");
+        put("BURKINA FASO",                     "236");
+        put("BURUNDI",                          "328");
+        put("BUTAN",                            "675");
+        put("CABO VERDE, REPUBLICA DE",         "247");
+        put("CAIMAN, ISLAS",                    "463");
+        put("CAMBOYA",                          "696");
+        put("CAMERUN",                          "302");
+        put("CANADA",                           "404");
+        put("CENTROAFRICANA, REPUBLICA",        "306");
+        put("CHAD",                             "244");
+        put("CHECA, REPUBLICA",                 "061");
+        put("CHILE",                            "512");
+        put("CHINA",                            "720");
+        put("CHIPRE",                           "600");
+        put("COCOS",                            "833");
+        put("COLOMBIA",                         "480");
+        put("COMORAS",                          "375");
+        put("CONGO",                            "318");
+        put("CONGO, REPUBLICA DEMOCRATICA",     "322");
+        put("COOK, ISLAS",                      "107");
+        put("COREA DEL NORTE",                  "724");
+        put("COREA DEL SUR",                    "728");
+        put("COSTA DE MARFIL",                  "272");
+        put("COSTA RICA",                       "436");
+        put("CROACIA",                          "092");
+        put("CUBA",                             "448");
+        put("CURAÇAO",                          "531");
+        put("DINAMARCA",                        "008");
+        put("DOMINICA",                         "460");
+        put("DOMINICANA, REPUBLICA",            "456");
+        put("ECUADOR",                          "500");
+        put("EGIPTO",                           "220");
+        put("EMIRATOS ARABES UNIDOS",           "647");
+        put("ERITREA",                          "336");
+        put("ESLOVAQUIA",                       "063");
+        put("ESLOVENIA",                        "091");
+        put("ESTADOS UNIDOS DE AMERICA",        "400");
+        put("ESTONIA",                          "053");
+        put("ETIOPIA",                          "334");
+        put("FEROE, ISLAS",                     "041");
+        put("FILIPINAS",                        "708");
+        put("FINLANDIA",                        "032");
+        put("FIYI",                             "815");
+        put("FRANCIA",                          "001");
+        put("GABON",                            "314");
+        put("GAMBIA",                           "252");
+        put("GEORGIA",                          "076");
+        put("GEORGIA DEL SUR",                  "893");
+        put("GHANA",                            "276");
+        put("GIBRALTAR",                        "044");
+        put("GRANADA",                          "473");
+        put("GRECIA",                           "009");
+        put("GROENLANDIA",                      "406");
+        put("GUAM",                             "831");
+        put("GUATEMALA",                        "416");
+        put("GUERNESEY",                        "108");
+        put("GUINEA",                           "260");
+        put("GUINEA ECUATORIAL",                "310");
+        put("GUINEA-BISSAU",                    "257");
+        put("GUYANA",                           "488");
+        put("HAITI",                            "452");
+        put("HEARD Y MCDONALD, ISLAS",          "835");
+        put("HONDURAS",                         "424");
+        put("HONG-KONG",                        "740");
+        put("HUNGRIA",                          "064");
+        put("INDIA",                            "664");
+        put("INDONESIA",                        "700");
+        put("IRAN",                             "616");
+        put("IRAQ",                             "612");
+        put("IRLANDA",                          "007");
+        put("ISLA DE MAN",                      "104");
+        put("ISLANDIA",                         "024");
+        put("ISRAEL",                           "624");
+        put("ITALIA",                           "005");
+        put("JAMAICA",                          "464");
+        put("JAPON",                            "392");
+        put("JERSEY",                           "109");
+        put("JORDANIA",                         "628");
+        put("KAZAJSTAN",                        "079");
+        put("KENIA",                            "346");
+        put("KIRGUISTAN",                       "083");
+        put("KIRIBATI",                         "812");
+        put("KUWAIT",                           "636");
+        put("LAOS",                             "684");
+        put("LESOTHO",                          "395");
+        put("LETONIA",                          "054");
+        put("LIBANO",                           "604");
+        put("LIBERIA",                          "268");
+        put("LIBIA",                            "216");
+        put("LIECHTENSTEIN",                    "037");
+        put("LITUANIA",                         "055");
+        put("LUXEMBURGO",                       "018");
+        put("MACAO",                            "743");
+        put("MACEDONIA",                        "096");
+        put("MADAGASCAR",                       "370");
+        put("MALASIA",                          "701");
+        put("MALAWI",                           "386");
+        put("MALDIVAS",                         "667");
+        put("MALI",                             "232");
+        put("MALTA",                            "046");
+        put("MALVINAS, ISLAS",                  "529");
+        put("MARIANAS DEL NORTE, ISLAS",        "820");
+        put("MARRUECOS",                        "204");
+        put("MARSHALL, ISLAS",                  "824");
+        put("MAURICIO",                         "373");
+        put("MAURITANIA",                       "228");
+        put("MAYOTTE",                          "377");
+        put("MENORES ALEJADAS EE.UU, ISLAS",    "832");
+        put("MEXICO",                           "412");
+        put("MICRONESIA",                       "823");
+        put("MOLDAVIA",                         "074");
+        put("MONACO",                           "101");
+        put("MONGOLIA",                         "716");
+        put("MONTENEGRO",                       "499");
+        put("MONTSERRAT",                       "470");
+        put("MOZAMBIQUE",                       "366");
+        put("MYANMAR",                          "676");
+        put("NAMIBIA",                          "389");
+        put("NAURU",                            "803");
+        put("NAVIDAD, ISLA",                    "834");
+        put("NEPAL",                            "672");
+        put("NICARAGUA",                        "432");
+        put("NIGER",                            "240");
+        put("NIGERIA",                          "288");
+        put("NIUE, ISLA",                       "838");
+        put("NORFOLK, ISLA",                    "836");
+        put("NORUEGA",                          "028");
+        put("NUEVA CALEDONIA",                  "809");
+        put("NUEVA ZELANDA",                    "804");
+        put("OCEANO INDICO, TERRI.BRITANICO",   "357");
+        put("OMAN",                             "649");
+        put("OTROS PAISES NO RELACIONADOS",     "958");
+        put("PAISES BAJOS",                     "003");
+        put("PAISES BAJOS (PARTE CARIBEÑA)",    "535");
+        put("PAKISTAN",                         "662");
+        put("PALAU",                            "825");
+        put("PANAMA",                           "442");
+        put("PAPUA NUEVA GUINEA",               "801");
+        put("PARAGUAY",                         "520");
+        put("PERU",                             "504");
+        put("PITCAIRN",                         "813");
+        put("POLINESIA FRANCESA",               "822");
+        put("POLONIA",                          "060");
+        put("PUERTO RICO",                      "401");
+        put("QATAR",                            "644");
+        put("REINO UNIDO",                      "006");
+        put("RUANDA",                           "324");
+        put("RUMANIA",                          "066");
+        put("RUSIA",                            "075");
+        put("SAHARA OCCIDENTAL",                "732");
+        put("SALOMON, ISLAS",                   "806");
+        put("SALVADOR, EL",                     "428");
+        put("SAMOA",                            "819");
+        put("SAMOA AMERICANA",                  "830");
+        put("SAN CRISTOBAL Y NIEVES",           "449");
+        put("SAN MARINO",                       "047");
+        put("SAN MARTIN",                       "663");
+        put("SAN PEDRO Y MIQUELON",             "408");
+        put("SAN VICENTE Y LAS GRANADINAS",     "467");
+        put("SANTA ELENA",                      "329");
+        put("SANTA LUCIA",                      "465");
+        put("SANTO TOME Y PRINCIPE",            "311");
+        put("SENEGAL",                          "248");
+        put("SERBIA",                           "688");
+        put("SEYCHELLES",                       "355");
+        put("SIERRA LEONA",                     "264");
+        put("SINGAPUR",                         "706");
+        put("SIRIA",                            "608");
+        put("SOMALIA",                          "342");
+        put("SRI LANKA",                        "669");
+        put("SUAZILANDIA",                      "393");
+        put("SUDAFRICA",                        "388");
+        put("SUDAN",                            "224");
+        put("SUDAN DEL SUR",                    "730");
+        put("SUECIA",                           "030");
+        put("SUIZA",                            "039");
+        put("SURINAM",                          "492");
+        put("TAILANDIA",                        "680");
+        put("TAIWAN",                           "736");
+        put("TANZANIA",                         "352");
+        put("TAYIKISTAN",                       "082");
+        put("TERRITORIO PALESTINO OCUPADO",     "627");
+        put("TIERRAS AUSTRALES FRANCESAS",      "894");
+        put("TIMOR LESTE",                      "626");
+        put("TOGO",                             "280");
+        put("TOKELAU, ISLAS",                   "839");
+        put("TONGA",                            "817");
+        put("TRINIDAD Y TOBAGO",                "472");
+        put("TUNEZ",                            "212");
+        put("TURCAS Y CAICOS, ISLAS",           "454");
+        put("TURKMENISTAN",                     "080");
+        put("TURQUIA",                          "052");
+        put("TUVALU",                           "807");
+        put("UCRANIA",                          "072");
+        put("UGANDA",                           "350");
+        put("URUGUAY",                          "524");
+        put("UZBEKISTAN",                       "081");
+        put("VANUATU",                          "816");
+        put("VATICANO, CIUDAD DEL",             "045");
+        put("VENEZUELA",                        "484");
+        put("VIETNAM",                          "690");
+        put("VIRGENES BRITANICAS, ISLAS",       "468");
+        put("VIRGENES DE LOS EE.UU, ISLAS",     "457");
+        put("WALLIS Y FUTUNA, ISLAS",           "811");
+        put("YEMEN",                            "653");
+        put("YIBUTI",                           "338");
+        put("ZAMBIA",                           "378");
+        put("ZIMBABUE",                         "382");
+    }};
+
+    /**
+     * Looks up the 3-digit country code for the given Salesforce BillingCountry value.
+     * The input is matched case-insensitively and trimmed.
+     * Returns "958" (OTROS PAISES NO RELACIONADOS) if not found.
+     */
+    public static String getCountryCode(String billingCountry) {
+        if (billingCountry == null || billingCountry.trim().isEmpty()) return "   ";
+        String key = billingCountry.trim().toUpperCase();
+        String code = COUNTRY_CODES.get(key);
+        return code != null ? code : "958";
+    }
+}

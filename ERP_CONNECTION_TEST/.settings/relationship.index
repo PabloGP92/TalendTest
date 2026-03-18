@@ -108,6 +108,10 @@
     "id" : "built-in",
     "version" : "Latest",
     "type" : "context"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
   } ]
 }, {
   "baseItem" : {

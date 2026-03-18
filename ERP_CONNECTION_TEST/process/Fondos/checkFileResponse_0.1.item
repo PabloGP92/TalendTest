@@ -7,6 +7,8 @@
     <contextParameter comment="" name="sftpPort" prompt="sftpPort?" promptNeeded="false" repositoryContextId="built-in" type="id_Integer" value="22" internalId="_i4fHgiLBEfGcxMqauaUP6g"/>
     <contextParameter comment="" name="sftpOutDirectory" prompt="sftpOutDirectory?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="out" internalId="_r2ar0CLBEfGcxMqauaUP6g"/>
     <contextParameter comment="" name="responseFileName" prompt="responseFileName?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="06_02_2026_14_03_43_OFE.TITU7337.CA9986.F260206.H184726.txt" internalId="_vgr-ICLBEfGcxMqauaUP6g"/>
+    <contextParameter comment="" name="JWTCertificate" prompt="JWTCertificate?" promptNeeded="false" repositoryContextId="built-in" type="id_Resource" value="_SM5xoB34EfGGtMRnAo6OKQ|Latest" internalId="_kItywCLhEfGcxMqauaUP6g"/>
+    <contextParameter comment="" name="columnWidths" prompt="columnWidths?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value="4,8,25,1,8,8,8,8,8,3,12,12,12,12,35,35,1,10,15,12,2,8,8,25,20,2,12,8,8,1,12,1,35" internalId="_5vopICLnEfGcxMqauaUP6g"/>
   </context>
   <parameters>
     <elementParameter field="CHECK" name="LOG4J_RUN_ACTIVATE" value="true" show="false"/>
@@ -107,21 +109,9 @@
     <elementParameter field="TEXT" name="FOOTER_CODE" value="" show="false"/>
     <elementParameter field="TEXT" name="FOOTER_IMPORT" value="" show="false"/>
   </parameters>
-  <node componentName="tLoop" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="40" posY="120">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tLoop_1" show="false"/>
-    <elementParameter field="RADIO" name="FORLOOP" value="false"/>
-    <elementParameter field="RADIO" name="WHILELOOP" value="true"/>
-    <elementParameter field="TEXT" name="FROM" value="1" show="false"/>
-    <elementParameter field="TEXT" name="TO" value="10" show="false"/>
-    <elementParameter field="TEXT" name="STEP" value="1" show="false"/>
-    <elementParameter field="CHECK" name="INCREASE" value="true" show="false"/>
-    <elementParameter field="TEXT" name="DECLARATION" value="int i=0"/>
-    <elementParameter field="TEXT" name="CONDITION" value="globalMap.get(&quot;FILE_FOUND&quot;) == null || !(Boolean)globalMap.get(&quot;FILE_FOUND&quot;)"/>
-    <elementParameter field="TEXT" name="ITERATION" value="i++"/>
-    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-  </node>
   <node componentName="tFTPFileList" componentVersion="0.100" offsetLabelX="0" offsetLabelY="0" posX="200" posY="120">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFTPFileList_1" show="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="false"/>
     <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
     <elementParameter field="COMPONENT_LIST" name="CONNECTION" value="" show="false"/>
     <elementParameter field="TEXT" name="HOST" value="context.sftpHost"/>
@@ -166,6 +156,7 @@
   </node>
   <node componentName="tIterateToFlow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="320" posY="120">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tIterateToFlow_1" show="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="false"/>
     <elementParameter field="TABLE" name="MAPPING">
       <elementValue elementRef="SCHEMA_COLUMN" value="responseFileName" id="0"/>
       <elementValue elementRef="VALUE" value="((String)globalMap.get(&quot;tFTPFileList_1_CURRENT_FILE&quot;))" id="1"/>
@@ -177,6 +168,7 @@
   </node>
   <node componentName="tLogRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="520" posY="120">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tLogRow_1" show="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="false"/>
     <elementParameter field="RADIO" name="BASIC_MODE" value="false"/>
     <elementParameter field="RADIO" name="TABLE_PRINT" value="true"/>
     <elementParameter field="RADIO" name="VERTICAL" value="false"/>
@@ -201,6 +193,7 @@
   </node>
   <node componentName="tJava" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="560" posY="240">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tJava_1" show="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="false"/>
     <elementParameter field="MEMO_EDITOR_JAVA" name="CODE" value="//Check if it matches the expected response file&#xD;&#xA;System.out.println(&quot;filename : &quot; + ((String)globalMap.get(&quot;tFTPFileList_1_CURRENT_FILE&quot;)) );&#xD;&#xA;&#xD;&#xA;if (((String)globalMap.get(&quot;tFTPFileList_1_CURRENT_FILE&quot;)) != null &amp;&amp; ((String)globalMap.get(&quot;tFTPFileList_1_CURRENT_FILE&quot;)).equals(context.responseFileName)) {&#xD;&#xA; globalMap.put(&quot;FILE_FOUND&quot;, true);&#xD;&#xA; System.out.println(&quot;file found : &quot; + ((String)globalMap.get(&quot;tFTPFileList_1_CURRENT_FILE&quot;)));&#xD;&#xA; globalMap.put(&quot;FILE_FOUND&quot;, true);&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;"/>
     <elementParameter field="MEMO_EDITOR_IMPORT" name="IMPORT" value="//import java.util.List;"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
@@ -208,26 +201,777 @@
       <column comment="" key="false" length="-1" name="responseFileName" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
-  <connection connectorName="ITERATE" label="Iterate" lineStyle="7" metaname="tLoop_1" offsetLabelX="0" offsetLabelY="0" source="tLoop_1" target="tFTPFileList_1">
-    <elementParameter field="CHECK" name="ENABLE_PARALLEL" value="false"/>
-    <elementParameter field="TEXT" name="NUMBER_PARALLEL" value="2" show="false"/>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="iterate2" show="false"/>
-  </connection>
+  <node componentName="tFTPGet" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="440" posY="400">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFTPGet_1" show="false"/>
+    <elementParameter field="CHECK" name="USE_EXISTING_CONNECTION" value="false"/>
+    <elementParameter field="COMPONENT_LIST" name="CONNECTION" value="" show="false"/>
+    <elementParameter field="TEXT" name="HOST" value="context.sftpHost"/>
+    <elementParameter field="TEXT" name="PORT" value="context.sftpPort"/>
+    <elementParameter field="TEXT" name="FTPS_PORT" value="990" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="LOGON_TYPE" value="PASSWORD" show="false"/>
+    <elementParameter field="TEXT" name="USERNAME" value="context.sftpUsername"/>
+    <elementParameter field="PASSWORD" name="PASSWORD" value="context.sftpPassword"/>
+    <elementParameter field="TEXT" name="ACCOUNT" value="&quot;&quot;" show="false"/>
+    <elementParameter field="CHECK" name="SFTP" value="true"/>
+    <elementParameter field="CHECK" name="FTPS" value="false" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="AUTH_METHOD" value="PASSWORD"/>
+    <elementParameter field="FILE" name="PRIVATEKEY" value="context.JWTCertificate" show="false"/>
+    <elementParameter field="PASSWORD" name="PASSPHRASE" value="enc:system.encryption.key.v1:jncIn3JCfJtRE3jrDcBApkbQo7ewYdsRUsLEWRKKvoAIpIey" show="false"/>
+    <elementParameter field="FILE" name="KEYSTORE_FILE" value="&quot;&quot;" show="false"/>
+    <elementParameter field="PASSWORD" name="KEYSTORE_PASS" value="enc:system.encryption.key.v1:hoFWUKHWwQyQJW59HGwH18RTVjSlJ0eCmduxgyWWjd0wM5c8" show="false"/>
+    <elementParameter field="DIRECTORY" name="LOCALDIR" value="System.getProperty(&quot;java.io.tmpdir&quot;)"/>
+    <elementParameter field="TEXT" name="REMOTEDIR" value="context.sftpOutDirectory"/>
+    <elementParameter field="CHECK" name="MOVE_TO_THE_CURRENT_DIRECTORY" value="true" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="MODE" value="ascii" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="OVERWRITE" value="never" show="false"/>
+    <elementParameter field="CHECK" name="APPEND" value="false" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="SFTPOVERWRITE" value="overwrite"/>
+    <elementParameter field="CHECK" name="PERL5_REGEX" value="false"/>
+    <elementParameter field="TABLE" name="FILES">
+      <elementValue elementRef="FILEMASK" value="context.responseFileName" id="0"/>
+    </elementParameter>
+    <elementParameter field="CLOSED_LIST" name="CONNECT_MODE" value="PASSIVE" show="false"/>
+    <elementParameter field="CLOSED_LIST" name="SECURITY_MODE" value="IMPLICIT" show="false"/>
+    <elementParameter field="CHECK" name="USE_ENCODING" value="false"/>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="&quot;ISO-8859-15&quot;" show="false"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="ISO-8859-15" show="false"/>
+    <elementParameter field="CHECK" name="DIE_ON_ERROR" value="true"/>
+    <elementParameter field="CHECK" name="USE_PROXY" value="false"/>
+    <elementParameter field="TEXT" name="PROXY_HOST" value="&quot;127.0.0.1&quot;" show="false"/>
+    <elementParameter field="TEXT" name="PROXY_PORT" value="&quot;1080&quot;" show="false"/>
+    <elementParameter field="TEXT" name="PROXY_USERNAME" value="&quot;&quot;" show="false"/>
+    <elementParameter field="PASSWORD" name="PROXY_PASSWORD" value="enc:system.encryption.key.v1:TqmhJ4EGNWPYinaFw785JbBPt+fbGBNRkbhi67+8" show="false"/>
+    <elementParameter field="CHECK" name="IGNORE_FAILURE_AT_QUIT" value="false" show="false"/>
+    <elementParameter field="CHECK" name="PRINT_MESSAGE" value="true"/>
+    <elementParameter field="OPENED_LIST" name="FTPS_PROT" value="&quot;P&quot;" show="false"/>
+    <elementParameter field="TEXT" name="FTPS_PROTECTION_BUFF_SIZE" value="0" show="false"/>
+    <elementParameter field="CHECK" name="REMOTE_VERIFICATION" value="true" show="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_TIMEOUT" value="60000"/>
+    <elementParameter field="CHECK" name="USE_STRICT_REPLY_PARSING" value="true"/>
+    <elementParameter field="CHECK" name="CONFIG_CLIENT" value="false"/>
+    <elementParameter field="TABLE" name="CLIENT_PARAMETERS" show="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tFTPGet_1">
+      <column comment="" key="false" length="-1" name="newColumn" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
+  <node componentName="tLogRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="640" posY="400">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tLogRow_2" show="false"/>
+    <elementParameter field="RADIO" name="BASIC_MODE" value="false"/>
+    <elementParameter field="RADIO" name="TABLE_PRINT" value="true"/>
+    <elementParameter field="RADIO" name="VERTICAL" value="false"/>
+    <elementParameter field="RADIO" name="PRINT_UNIQUE" value="true" show="false"/>
+    <elementParameter field="RADIO" name="PRINT_LABEL" value="false" show="false"/>
+    <elementParameter field="RADIO" name="PRINT_UNIQUE_LABEL" value="false" show="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="&quot;|&quot;" show="false"/>
+    <elementParameter field="CHECK" name="PRINT_HEADER" value="false" show="false"/>
+    <elementParameter field="CHECK" name="PRINT_UNIQUE_NAME" value="false" show="false"/>
+    <elementParameter field="CHECK" name="PRINT_COLNAMES" value="false" show="false"/>
+    <elementParameter field="CHECK" name="USE_FIXED_LENGTH" value="false" show="false"/>
+    <elementParameter field="TABLE" name="LENGTHS" show="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="newColumn" id="0"/>
+      <elementValue elementRef="LENGTH" value="10" id="1"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="PRINT_CONTENT_WITH_LOG4J" value="true"/>
+    <elementParameter field="TEXT" name="SCHEMA_OPT_NUM" value="100" show="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tLogRow_2">
+      <column comment="" key="false" length="-1" name="newColumn" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
+  <node componentName="tFileInputPositional" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="840" posY="400">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileInputPositional_1" show="false"/>
+    <elementParameter field="CHECK" name="USE_EXISTING_DYNAMIC" value="false"/>
+    <elementParameter field="COMPONENT_LIST" name="DYNAMIC" value="" show="false"/>
+    <elementParameter field="FILE" name="FILENAME" value="System.getProperty(&quot;java.io.tmpdir&quot;) + context.responseFileName"/>
+    <elementParameter field="TEXT" name="ROWSEPARATOR" value="&quot;\n&quot;"/>
+    <elementParameter field="CHECK" name="ADVANCED_OPTION" value="false"/>
+    <elementParameter field="TEXT" name="PATTERN" value="context.columnWidths"/>
+    <elementParameter field="CLOSED_LIST" name="PATTERN_UNITS" value="SYMBOLS"/>
+    <elementParameter field="TABLE" name="FORMATS" show="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="codigoCompartimento" id="0"/>
+      <elementValue elementRef="SIZE" value="" id="1"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="2"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="3"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaDatos" id="4"/>
+      <elementValue elementRef="SIZE" value="" id="5"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="6"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="7"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idMedioPago" id="8"/>
+      <elementValue elementRef="SIZE" value="" id="9"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="10"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="11"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="tipoActivo" id="12"/>
+      <elementValue elementRef="SIZE" value="" id="13"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="14"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="15"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaEmisionMP" id="16"/>
+      <elementValue elementRef="SIZE" value="" id="17"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="18"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="19"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoMP" id="20"/>
+      <elementValue elementRef="SIZE" value="" id="21"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="22"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="23"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoHabilMP" id="24"/>
+      <elementValue elementRef="SIZE" value="" id="25"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="26"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="27"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaPagoMP" id="28"/>
+      <elementValue elementRef="SIZE" value="" id="29"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="30"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="31"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaPagoDefinitivoMP" id="32"/>
+      <elementValue elementRef="SIZE" value="" id="33"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="34"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="35"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="divisa" id="36"/>
+      <elementValue elementRef="SIZE" value="" id="37"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="38"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="39"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominal" id="40"/>
+      <elementValue elementRef="SIZE" value="" id="41"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="42"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="43"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="asegurado" id="44"/>
+      <elementValue elementRef="SIZE" value="" id="45"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="46"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="47"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="franquicia" id="48"/>
+      <elementValue elementRef="SIZE" value="" id="49"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="50"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="51"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalDerechoCredito" id="52"/>
+      <elementValue elementRef="SIZE" value="" id="53"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="54"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="55"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idDeudor" id="56"/>
+      <elementValue elementRef="SIZE" value="" id="57"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="58"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="59"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idAcreedor" id="60"/>
+      <elementValue elementRef="SIZE" value="" id="61"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="62"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="63"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="medioPago" id="64"/>
+      <elementValue elementRef="SIZE" value="" id="65"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="66"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="67"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="cuentaFactoring" id="68"/>
+      <elementValue elementRef="SIZE" value="" id="69"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="70"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="71"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="numeroDerechoCredito" id="72"/>
+      <elementValue elementRef="SIZE" value="" id="73"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="74"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="75"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="importeTotalMP" id="76"/>
+      <elementValue elementRef="SIZE" value="" id="77"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="78"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="79"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idCesionMp" id="80"/>
+      <elementValue elementRef="SIZE" value="" id="81"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="82"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="83"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaTWC" id="84"/>
+      <elementValue elementRef="SIZE" value="" id="85"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="86"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="87"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaDocusign" id="88"/>
+      <elementValue elementRef="SIZE" value="" id="89"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="90"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="91"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idActivo" id="92"/>
+      <elementValue elementRef="SIZE" value="" id="93"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="94"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="95"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="numeroActivo" id="96"/>
+      <elementValue elementRef="SIZE" value="" id="97"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="98"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="99"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idCesionActivo" id="100"/>
+      <elementValue elementRef="SIZE" value="" id="101"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="102"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="103"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalTotal" id="104"/>
+      <elementValue elementRef="SIZE" value="" id="105"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="106"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="107"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaEmisionActivo" id="108"/>
+      <elementValue elementRef="SIZE" value="" id="109"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="110"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="111"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoActivo" id="112"/>
+      <elementValue elementRef="SIZE" value="" id="113"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="114"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="115"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="pagoProveedores" id="116"/>
+      <elementValue elementRef="SIZE" value="" id="117"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="118"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="119"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalDivisa" id="120"/>
+      <elementValue elementRef="SIZE" value="" id="121"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="122"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="123"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="success" id="124"/>
+      <elementValue elementRef="SIZE" value="" id="125"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="126"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="127"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="info" id="128"/>
+      <elementValue elementRef="SIZE" value="" id="129"/>
+      <elementValue elementRef="PADDING_CHAR" value="' '" id="130"/>
+      <elementValue elementRef="ALIGN" value="'L'" id="131"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="REMOVE_EMPTY_ROW" value="true"/>
+    <elementParameter field="CHECK" name="UNCOMPRESS" value="false"/>
+    <elementParameter field="CHECK" name="DIE_ON_ERROR" value="false"/>
+    <elementParameter field="TEXT" name="HEADER" value="0"/>
+    <elementParameter field="TEXT" name="FOOTER" value="0"/>
+    <elementParameter field="TEXT" name="LIMIT" value=""/>
+    <elementParameter field="CHECK" name="PROCESS_LONG_ROW" value="false"/>
+    <elementParameter field="CHECK" name="ADVANCED_SEPARATOR" value="false"/>
+    <elementParameter field="TEXT" name="THOUSANDS_SEPARATOR" value="&quot;,&quot;" show="false"/>
+    <elementParameter field="TEXT" name="DECIMAL_SEPARATOR" value="&quot;.&quot;" show="false"/>
+    <elementParameter field="CHECK" name="TRIMALL" value="true"/>
+    <elementParameter field="CHECK" name="CHECK_DATE" value="false"/>
+    <elementParameter field="TABLE" name="TRIMSELECT" show="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="codigoCompartimento" id="0"/>
+      <elementValue elementRef="TRIM" value="false" id="1"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaDatos" id="2"/>
+      <elementValue elementRef="TRIM" value="false" id="3"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idMedioPago" id="4"/>
+      <elementValue elementRef="TRIM" value="false" id="5"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="tipoActivo" id="6"/>
+      <elementValue elementRef="TRIM" value="false" id="7"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaEmisionMP" id="8"/>
+      <elementValue elementRef="TRIM" value="false" id="9"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoMP" id="10"/>
+      <elementValue elementRef="TRIM" value="false" id="11"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoHabilMP" id="12"/>
+      <elementValue elementRef="TRIM" value="false" id="13"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaPagoMP" id="14"/>
+      <elementValue elementRef="TRIM" value="false" id="15"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaPagoDefinitivoMP" id="16"/>
+      <elementValue elementRef="TRIM" value="false" id="17"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="divisa" id="18"/>
+      <elementValue elementRef="TRIM" value="false" id="19"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominal" id="20"/>
+      <elementValue elementRef="TRIM" value="false" id="21"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="asegurado" id="22"/>
+      <elementValue elementRef="TRIM" value="false" id="23"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="franquicia" id="24"/>
+      <elementValue elementRef="TRIM" value="false" id="25"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalDerechoCredito" id="26"/>
+      <elementValue elementRef="TRIM" value="false" id="27"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idDeudor" id="28"/>
+      <elementValue elementRef="TRIM" value="false" id="29"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idAcreedor" id="30"/>
+      <elementValue elementRef="TRIM" value="false" id="31"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="medioPago" id="32"/>
+      <elementValue elementRef="TRIM" value="false" id="33"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="cuentaFactoring" id="34"/>
+      <elementValue elementRef="TRIM" value="false" id="35"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="numeroDerechoCredito" id="36"/>
+      <elementValue elementRef="TRIM" value="false" id="37"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="importeTotalMP" id="38"/>
+      <elementValue elementRef="TRIM" value="false" id="39"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idCesionMp" id="40"/>
+      <elementValue elementRef="TRIM" value="false" id="41"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaTWC" id="42"/>
+      <elementValue elementRef="TRIM" value="false" id="43"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaDocusign" id="44"/>
+      <elementValue elementRef="TRIM" value="false" id="45"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idActivo" id="46"/>
+      <elementValue elementRef="TRIM" value="false" id="47"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="numeroActivo" id="48"/>
+      <elementValue elementRef="TRIM" value="false" id="49"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idCesionActivo" id="50"/>
+      <elementValue elementRef="TRIM" value="false" id="51"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalTotal" id="52"/>
+      <elementValue elementRef="TRIM" value="false" id="53"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaEmisionActivo" id="54"/>
+      <elementValue elementRef="TRIM" value="false" id="55"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoActivo" id="56"/>
+      <elementValue elementRef="TRIM" value="false" id="57"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="pagoProveedores" id="58"/>
+      <elementValue elementRef="TRIM" value="false" id="59"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalDivisa" id="60"/>
+      <elementValue elementRef="TRIM" value="false" id="61"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="success" id="62"/>
+      <elementValue elementRef="TRIM" value="false" id="63"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="info" id="64"/>
+      <elementValue elementRef="TRIM" value="false" id="65"/>
+    </elementParameter>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="&quot;ISO-8859-15&quot;"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="ISO-8859-15"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tFileInputPositional_1">
+      <column comment="" key="false" length="-1" name="codigoCompartimento" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Compartment__r_TWC_Code__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaDatos" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idMedioPago" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_LLC_BI__Payment_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="tipoActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaEmisionMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaVencimientoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaVencimientoHabilMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Business_Days_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaPagoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Estimated_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaPagoDefinitivoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Grace_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="divisa" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Currency__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="nominal" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_LLC_BI__Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="asegurado" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Policy_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="franquicia" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Franchise_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="nominalDerechoCredito" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Assigned_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idDeudor" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idAcreedor" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="medioPago" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_LLC_BI__Payment_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="cuentaFactoring" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Contract_Number__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="numeroDerechoCredito" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Invoice_Id__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="importeTotalMP" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idCesionMp" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaTWC" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Assignment_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaDocusign" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_TWC_Contract_Signature_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Number__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="numeroActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Original_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idCesionActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nominalTotal" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaEmisionActivo" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaVencimientoActivo" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="pagoProveedores" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nominalDivisa" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_LLC_BI__Product_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="success" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="info" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+    <metadata connector="REJECT" name="REJECT">
+      <column comment="" key="false" length="-1" name="codigoCompartimento" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Compartment__r_TWC_Code__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaDatos" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idMedioPago" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_LLC_BI__Payment_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="tipoActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaEmisionMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaVencimientoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaVencimientoHabilMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Business_Days_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaPagoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Estimated_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaPagoDefinitivoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Grace_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="divisa" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Currency__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="nominal" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_LLC_BI__Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="asegurado" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Policy_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="franquicia" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Franchise_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="nominalDerechoCredito" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Assigned_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idDeudor" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idAcreedor" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="medioPago" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_LLC_BI__Payment_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="cuentaFactoring" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Contract_Number__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="numeroDerechoCredito" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Invoice_Id__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="importeTotalMP" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idCesionMp" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaTWC" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Assignment_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaDocusign" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_TWC_Contract_Signature_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Number__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="numeroActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Original_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idCesionActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nominalTotal" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaEmisionActivo" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaVencimientoActivo" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="pagoProveedores" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nominalDivisa" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_LLC_BI__Product_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="success" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="info" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column defaultValue="" key="false" length="255" name="errorCode" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column defaultValue="" key="false" length="255" name="errorMessage" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
+  <node componentName="tLogRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="840" posY="240">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tLogRow_3" show="false"/>
+    <elementParameter field="RADIO" name="BASIC_MODE" value="false"/>
+    <elementParameter field="RADIO" name="TABLE_PRINT" value="true"/>
+    <elementParameter field="RADIO" name="VERTICAL" value="false"/>
+    <elementParameter field="RADIO" name="PRINT_UNIQUE" value="true" show="false"/>
+    <elementParameter field="RADIO" name="PRINT_LABEL" value="false" show="false"/>
+    <elementParameter field="RADIO" name="PRINT_UNIQUE_LABEL" value="false" show="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="&quot;|&quot;" show="false"/>
+    <elementParameter field="CHECK" name="PRINT_HEADER" value="false" show="false"/>
+    <elementParameter field="CHECK" name="PRINT_UNIQUE_NAME" value="false" show="false"/>
+    <elementParameter field="CHECK" name="PRINT_COLNAMES" value="false" show="false"/>
+    <elementParameter field="CHECK" name="USE_FIXED_LENGTH" value="false" show="false"/>
+    <elementParameter field="TABLE" name="LENGTHS" show="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="codigoCompartimento" id="0"/>
+      <elementValue elementRef="LENGTH" value="10" id="1"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaDatos" id="2"/>
+      <elementValue elementRef="LENGTH" value="10" id="3"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idMedioPago" id="4"/>
+      <elementValue elementRef="LENGTH" value="10" id="5"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="tipoActivo" id="6"/>
+      <elementValue elementRef="LENGTH" value="10" id="7"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaEmisionMP" id="8"/>
+      <elementValue elementRef="LENGTH" value="10" id="9"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoMP" id="10"/>
+      <elementValue elementRef="LENGTH" value="10" id="11"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoHabilMP" id="12"/>
+      <elementValue elementRef="LENGTH" value="10" id="13"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaPagoMP" id="14"/>
+      <elementValue elementRef="LENGTH" value="10" id="15"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaPagoDefinitivoMP" id="16"/>
+      <elementValue elementRef="LENGTH" value="10" id="17"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="divisa" id="18"/>
+      <elementValue elementRef="LENGTH" value="10" id="19"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominal" id="20"/>
+      <elementValue elementRef="LENGTH" value="10" id="21"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="asegurado" id="22"/>
+      <elementValue elementRef="LENGTH" value="10" id="23"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="franquicia" id="24"/>
+      <elementValue elementRef="LENGTH" value="10" id="25"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalDerechoCredito" id="26"/>
+      <elementValue elementRef="LENGTH" value="10" id="27"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idDeudor" id="28"/>
+      <elementValue elementRef="LENGTH" value="10" id="29"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idAcreedor" id="30"/>
+      <elementValue elementRef="LENGTH" value="10" id="31"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="medioPago" id="32"/>
+      <elementValue elementRef="LENGTH" value="10" id="33"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="cuentaFactoring" id="34"/>
+      <elementValue elementRef="LENGTH" value="10" id="35"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="numeroDerechoCredito" id="36"/>
+      <elementValue elementRef="LENGTH" value="10" id="37"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="importeTotalMP" id="38"/>
+      <elementValue elementRef="LENGTH" value="10" id="39"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idCesionMp" id="40"/>
+      <elementValue elementRef="LENGTH" value="10" id="41"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaTWC" id="42"/>
+      <elementValue elementRef="LENGTH" value="10" id="43"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaDocusign" id="44"/>
+      <elementValue elementRef="LENGTH" value="10" id="45"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idActivo" id="46"/>
+      <elementValue elementRef="LENGTH" value="10" id="47"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="numeroActivo" id="48"/>
+      <elementValue elementRef="LENGTH" value="10" id="49"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="idCesionActivo" id="50"/>
+      <elementValue elementRef="LENGTH" value="10" id="51"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalTotal" id="52"/>
+      <elementValue elementRef="LENGTH" value="10" id="53"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaEmisionActivo" id="54"/>
+      <elementValue elementRef="LENGTH" value="10" id="55"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="fechaVencimientoActivo" id="56"/>
+      <elementValue elementRef="LENGTH" value="10" id="57"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="pagoProveedores" id="58"/>
+      <elementValue elementRef="LENGTH" value="10" id="59"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="nominalDivisa" id="60"/>
+      <elementValue elementRef="LENGTH" value="10" id="61"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="success" id="62"/>
+      <elementValue elementRef="LENGTH" value="10" id="63"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="info" id="64"/>
+      <elementValue elementRef="LENGTH" value="10" id="65"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="PRINT_CONTENT_WITH_LOG4J" value="true"/>
+    <elementParameter field="TEXT" name="SCHEMA_OPT_NUM" value="100" show="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tLogRow_3">
+      <column comment="" key="false" length="-1" name="codigoCompartimento" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Compartment__r_TWC_Code__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaDatos" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idMedioPago" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_LLC_BI__Payment_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="tipoActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaEmisionMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaVencimientoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaVencimientoHabilMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Business_Days_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaPagoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Estimated_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaPagoDefinitivoMP" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Grace_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="divisa" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Currency__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="nominal" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_LLC_BI__Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="asegurado" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Policy_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="franquicia" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Franchise_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="nominalDerechoCredito" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Assigned_Amount__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idDeudor" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idAcreedor" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="medioPago" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_LLC_BI__Payment_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="cuentaFactoring" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Contract_Number__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="numeroDerechoCredito" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Invoice_Id__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="importeTotalMP" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="idCesionMp" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaTWC" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Assignment_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="fechaDocusign" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_TWC_Contract_Signature_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Number__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="numeroActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Receivable__r_TWC_Original_Due_Date__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="idCesionActivo" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nominalTotal" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaEmisionActivo" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="fechaVencimientoActivo" nullable="true" pattern="&quot;yyyyMMdd&quot;" precision="-1" sourceType="" type="id_Date" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="pagoProveedores" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="nominalDivisa" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true">
+        <additionalField key="AVRO_TECHNICAL_KEY" value="TWC_Batch__r_TWC_Contract__r_LLC_BI__Product_Type__c"/>
+      </column>
+      <column comment="" key="false" length="-1" name="success" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="-1" name="info" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
   <connection connectorName="ITERATE" label="Iterate" lineStyle="7" metaname="tFTPFileList_1" offsetLabelX="0" offsetLabelY="0" source="tFTPFileList_1" target="tIterateToFlow_1">
     <elementParameter field="CHECK" name="ENABLE_PARALLEL" value="false"/>
     <elementParameter field="TEXT" name="NUMBER_PARALLEL" value="2" show="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="false" show="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="iterate1" show="false"/>
   </connection>
   <connection connectorName="FLOW" label="row1" lineStyle="0" metaname="tIterateToFlow_1" offsetLabelX="0" offsetLabelY="0" source="tIterateToFlow_1" target="tLogRow_1">
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="false" show="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="row1" show="false"/>
   </connection>
   <connection connectorName="FLOW" label="row2" lineStyle="0" metaname="tLogRow_1" offsetLabelX="0" offsetLabelY="0" source="tLogRow_1" target="tJava_1">
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="false" show="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="row2" show="false"/>
   </connection>
+  <connection connectorName="FLOW" label="row3" lineStyle="0" metaname="tFTPGet_1" offsetLabelX="0" offsetLabelY="0" source="tFTPGet_1" target="tLogRow_2">
+    <elementParameter field="TABLE" name="TRACES_CONNECTION_FILTER" show="false">
+      <elementValue elementRef="TRACE_COLUMN" value="fileName" id="0"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="1"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="2"/>
+      <elementValue elementRef="TRACE_COLUMN" value="newColumn" id="3"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="4"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="5"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row3" show="false"/>
+  </connection>
+  <connection connectorName="COMPONENT_OK" label="OnComponentOk" lineStyle="3" metaname="tLogRow_2" offsetLabelX="0" offsetLabelY="0" source="tLogRow_2" target="tFileInputPositional_1">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnComponentOk1" show="false"/>
+  </connection>
+  <connection connectorName="FLOW" label="row4" lineStyle="0" metaname="tFileInputPositional_1" offsetLabelX="0" offsetLabelY="0" source="tFileInputPositional_1" target="tLogRow_3">
+    <elementParameter field="TABLE" name="TRACES_CONNECTION_FILTER" show="false">
+      <elementValue elementRef="TRACE_COLUMN" value="numeroActivo" id="0"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="1"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="2"/>
+      <elementValue elementRef="TRACE_COLUMN" value="idCesionMp" id="3"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="4"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="5"/>
+      <elementValue elementRef="TRACE_COLUMN" value="idAcreedor" id="6"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="7"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="8"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaEmisionActivo" id="9"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="10"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="11"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaPagoMP" id="12"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="13"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="14"/>
+      <elementValue elementRef="TRACE_COLUMN" value="asegurado" id="15"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="16"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="17"/>
+      <elementValue elementRef="TRACE_COLUMN" value="cuentaFactoring" id="18"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="19"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="20"/>
+      <elementValue elementRef="TRACE_COLUMN" value="numeroDerechoCredito" id="21"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="22"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="23"/>
+      <elementValue elementRef="TRACE_COLUMN" value="idCesionActivo" id="24"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="25"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="26"/>
+      <elementValue elementRef="TRACE_COLUMN" value="importeTotalMP" id="27"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="28"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="29"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaPagoDefinitivoMP" id="30"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="31"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="32"/>
+      <elementValue elementRef="TRACE_COLUMN" value="nominal" id="33"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="34"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="35"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaVencimientoHabilMP" id="36"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="37"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="38"/>
+      <elementValue elementRef="TRACE_COLUMN" value="nominalDerechoCredito" id="39"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="40"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="41"/>
+      <elementValue elementRef="TRACE_COLUMN" value="idActivo" id="42"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="43"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="44"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaVencimientoMP" id="45"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="46"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="47"/>
+      <elementValue elementRef="TRACE_COLUMN" value="idMedioPago" id="48"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="49"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="50"/>
+      <elementValue elementRef="TRACE_COLUMN" value="codigoCompartimento" id="51"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="52"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="53"/>
+      <elementValue elementRef="TRACE_COLUMN" value="info" id="54"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="55"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="56"/>
+      <elementValue elementRef="TRACE_COLUMN" value="tipoActivo" id="57"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="58"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="59"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaTWC" id="60"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="61"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="62"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaEmisionMP" id="63"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="64"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="65"/>
+      <elementValue elementRef="TRACE_COLUMN" value="divisa" id="66"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="67"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="68"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaVencimientoActivo" id="69"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="70"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="71"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaDocusign" id="72"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="73"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="74"/>
+      <elementValue elementRef="TRACE_COLUMN" value="fechaDatos" id="75"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="76"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="77"/>
+      <elementValue elementRef="TRACE_COLUMN" value="idDeudor" id="78"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="79"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="80"/>
+      <elementValue elementRef="TRACE_COLUMN" value="nominalDivisa" id="81"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="82"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="83"/>
+      <elementValue elementRef="TRACE_COLUMN" value="success" id="84"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="85"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="86"/>
+      <elementValue elementRef="TRACE_COLUMN" value="nominalTotal" id="87"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="88"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="89"/>
+      <elementValue elementRef="TRACE_COLUMN" value="medioPago" id="90"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="91"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="92"/>
+      <elementValue elementRef="TRACE_COLUMN" value="franquicia" id="93"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="94"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="95"/>
+      <elementValue elementRef="TRACE_COLUMN" value="pagoProveedores" id="96"/>
+      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true" id="97"/>
+      <elementValue elementRef="TRACE_COLUMN_CONDITION" value="" id="98"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row4" show="false"/>
+  </connection>
   <subjob>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tLoop_1" show="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFTPFileList_1" show="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="0;93;185" show="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="0;93;185"/>
+  </subjob>
+  <subjob>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFTPGet_1" show="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="0;93;185" show="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="0;93;185"/>
+  </subjob>
+  <subjob>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileInputPositional_1" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="0;93;185" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="0;93;185"/>
   </subjob>

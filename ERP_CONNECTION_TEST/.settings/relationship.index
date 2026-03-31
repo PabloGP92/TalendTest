@@ -1,5 +1,20 @@
 [ {
   "baseItem" : {
+    "id" : "_5ms4oCaiEfGyFd_twrE-pg",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  } ]
+}, {
+  "baseItem" : {
     "id" : "_7y2ncB3sEfGGtMRnAo6OKQ",
     "version" : "0.1",
     "type" : "job"
@@ -14,6 +29,37 @@
     "type" : "resource"
   }, {
     "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_BE8pACzcEfGKm78UVMGYlw",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_v4MxMCH7EfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_zYJcUCIbEfG3D-RU2AuquA",
     "version" : "Latest",
     "type" : "resource"
   }, {
@@ -45,6 +91,29 @@
     "type" : "resource"
   }, {
     "id" : "_zYJcUCIbEfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_CkNmcCOTEfGAuaIZZFmorA",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
     "version" : "Latest",
     "type" : "resource"
   }, {
@@ -187,6 +256,68 @@
   } ]
 }, {
   "baseItem" : {
+    "id" : "_lMYzkCjyEfGPCJIWVx1vqg",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_v4MxMCH7EfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_zYJcUCIbEfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_pbQzsCRQEfGSO4kgnzUp2Q",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_v4MxMCH7EfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_zYJcUCIbEfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
     "id" : "_tNFz4BxrEfGIW_xthwcR7Q",
     "version" : "0.1",
     "type" : "job"
@@ -207,6 +338,21 @@
     "id" : "FactoringFileGenerator",
     "version" : "Latest",
     "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_ujkAsCa1EfGyFd_twrE-pg",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "ERP_CONNECTION_TEST:_5ms4oCaiEfGyFd_twrE-pg",
+    "version" : "Latest",
+    "type" : "job"
   } ]
 }, {
   "baseItem" : {

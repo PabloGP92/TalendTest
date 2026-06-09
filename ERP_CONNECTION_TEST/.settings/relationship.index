@@ -15,6 +15,21 @@
   } ]
 }, {
   "baseItem" : {
+    "id" : "_7PYHYESCEfGzidOU9DpIyQ",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  } ]
+}, {
+  "baseItem" : {
     "id" : "_7y2ncB3sEfGGtMRnAo6OKQ",
     "version" : "0.1",
     "type" : "job"
@@ -35,6 +50,21 @@
     "id" : "FactoringFileGenerator",
     "version" : "Latest",
     "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_925YsESBEfGVc9eT3pJXWw",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "ERP_CONNECTION_TEST:_7PYHYESCEfGzidOU9DpIyQ",
+    "version" : "Latest",
+    "type" : "job"
   } ]
 }, {
   "baseItem" : {
@@ -207,6 +237,21 @@
   } ]
 }, {
   "baseItem" : {
+    "id" : "___UdwESBEfGVc9eT3pJXWw",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  } ]
+}, {
+  "baseItem" : {
     "id" : "_a4ShEBJKEfGRkrHI23-GRg",
     "version" : "0.1",
     "type" : "job"
@@ -230,6 +275,37 @@
     "id" : "_84ev0B1JEfGfnajHmPudaA",
     "version" : "Latest",
     "type" : "resource"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_evNeIEO0EfGtRucZt8XNwA",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "built-in",
+    "version" : "Latest",
+    "type" : "context"
+  }, {
+    "id" : "_84ev0B1JEfGfnajHmPudaA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_SM5xoB34EfGGtMRnAo6OKQ",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_v4MxMCH7EfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "_zYJcUCIbEfG3D-RU2AuquA",
+    "version" : "Latest",
+    "type" : "resource"
+  }, {
+    "id" : "FactoringFileGenerator",
+    "version" : "Latest",
+    "type" : "routine"
   } ]
 }, {
   "baseItem" : {
@@ -284,6 +360,17 @@
     "id" : "FactoringFileGenerator",
     "version" : "Latest",
     "type" : "routine"
+  } ]
+}, {
+  "baseItem" : {
+    "id" : "_n84K4D-_EfGNSPckBRjr4w",
+    "version" : "0.1",
+    "type" : "job"
+  },
+  "relatedItems" : [ {
+    "id" : "_7DWS0AJxEfG6Eu58Pu0rmw",
+    "version" : "Latest",
+    "type" : "property"
   } ]
 }, {
   "baseItem" : {

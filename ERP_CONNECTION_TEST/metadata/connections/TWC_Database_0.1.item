@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TalendMetadata:DatabaseConnection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmi:id="_pSC-8AJyEfG6Eu58Pu0rmw" name="TWC_Database" id="_7DWS0AJxEfG6Eu58Pu0rmw" label="TWC_Database" DatabaseType="Microsoft SQL Server" DriverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://192.168.178.50\sqlexpress:1433;DatabaseName=TWCREPLICA;" dbVersionString="MSSQL_PROP" Port="1433" Username="pablo.garciap@vasscompany.com" Password="enc:system.encryption.key.v1:d6WpolON3+mCb/02JEyWwuizrdxjFEHhCzHo19g1aiGXgJvzYQ==" ServerName="192.168.178.50\sqlexpress" DatasourceName="" FileFieldName="" SID="TWCREPLICA" SqlSynthax="" StringQuote="" NullChar="" DbmsId="id_MSSQL" ProductId="SQL_SERVER" AdditionalParams="" StandardSQL="true" SQLMode="false" UiSchema="" supportNLS="false">
-  <taggedValue xmi:id="_pSENEAJyEfG6Eu58Pu0rmw" tag="Is Conn Need Reload" value="false"/>
-  <taggedValue xmi:id="_pStGQAJyEfG6Eu58Pu0rmw" tag="package filter" value=""/>
-  <taggedValue xmi:id="_pS3eUAJyEfG6Eu58Pu0rmw" tag="Status" value=""/>
-  <taggedValue xmi:id="_pS3eUQJyEfG6Eu58Pu0rmw" tag="Version" value="0.1"/>
-  <taggedValue xmi:id="_pS3eUgJyEfG6Eu58Pu0rmw" tag="Purpose" value=""/>
-  <taggedValue xmi:id="_pS3eUwJyEfG6Eu58Pu0rmw" tag="Description" value=""/>
-  <taggedValue xmi:id="_pS3eVAJyEfG6Eu58Pu0rmw" tag="Author" value=""/>
-  <taggedValue xmi:id="_pS3eVQJyEfG6Eu58Pu0rmw" tag="otherParameter"/>
-  <parameters xmi:id="_vDDpYAJ0EfG6Eu58Pu0rmw" key="CONN_PARA_KEY_MAPRDB_TABLE_NS_MAPPING" value=""/>
-  <parameters xmi:id="_wzY-kAJ0EfG6Eu58Pu0rmw" key="CONN_PARA_KEY_USERNAME" value="pablo.garciap@vasscompany.com"/>
-</TalendMetadata:DatabaseConnection>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.relational="http:///orgomg/cwm/resource/relational.ecore">
+  <TalendMetadata:DatabaseConnection xmi:id="_pSC-8AJyEfG6Eu58Pu0rmw" name="TWC_Database" id="_7DWS0AJxEfG6Eu58Pu0rmw" label="TWC_Database" dataPackage="_vKoDoD_CEfGTh-InMwTFyQ" DatabaseType="Microsoft SQL Server" DriverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver" URL="jdbc:sqlserver://192.168.178.50\sqlexpress:1433;DatabaseName=TWCREPLICA;" dbVersionString="MSSQL_PROP" Port="1433" Username="Josemaria.lopez" Password="enc:system.encryption.key.v1:fDzFzu0kigSs1ne3+/dD+OnqT11VBJI5Y5Flkdp+c+JF5WQzbgCQQuKUPA==" ServerName="192.168.178.50\sqlexpress" DatasourceName="" FileFieldName="" SID="TWCREPLICA" SqlSynthax="" StringQuote="" NullChar="" DbmsId="id_MSSQL" ProductId="SQL_SERVER" AdditionalParams="" StandardSQL="true" SQLMode="false" UiSchema="" supportNLS="false">
+    <taggedValue xmi:id="_pSENEAJyEfG6Eu58Pu0rmw" tag="Is Conn Need Reload" value="false"/>
+    <taggedValue xmi:id="_pStGQAJyEfG6Eu58Pu0rmw" tag="package filter" value=""/>
+    <taggedValue xmi:id="_pS3eUAJyEfG6Eu58Pu0rmw" tag="Status" value=""/>
+    <taggedValue xmi:id="_pS3eUQJyEfG6Eu58Pu0rmw" tag="Version" value="0.1"/>
+    <taggedValue xmi:id="_pS3eUgJyEfG6Eu58Pu0rmw" tag="Purpose" value=""/>
+    <taggedValue xmi:id="_pS3eUwJyEfG6Eu58Pu0rmw" tag="Description" value=""/>
+    <taggedValue xmi:id="_pS3eVAJyEfG6Eu58Pu0rmw" tag="Author" value=""/>
+    <taggedValue xmi:id="_pS3eVQJyEfG6Eu58Pu0rmw" tag="otherParameter"/>
+    <taggedValue xmi:id="_vHugoD_CEfGTh-InMwTFyQ" tag="DB ProductName" value="Microsoft SQL Server"/>
+    <taggedValue xmi:id="_vHugoT_CEfGTh-InMwTFyQ" tag="DB ProductVersion" value="15.00.2000"/>
+    <taggedValue xmi:id="_vHugoj_CEfGTh-InMwTFyQ" tag="DB IdentifierQuoteString" value="&quot;"/>
+    <parameters xmi:id="_vDDpYAJ0EfG6Eu58Pu0rmw" key="CONN_PARA_KEY_MAPRDB_TABLE_NS_MAPPING" value=""/>
+    <parameters xmi:id="_wzY-kAJ0EfG6Eu58Pu0rmw" key="CONN_PARA_KEY_USERNAME" value="Josemaria.lopez"/>
+  </TalendMetadata:DatabaseConnection>
+  <orgomg.cwm.resource.relational:Catalog xmi:id="_vKoDoD_CEfGTh-InMwTFyQ" name="TWCREPLICA" dataManager="_pSC-8AJyEfG6Eu58Pu0rmw">
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqsD_CEfGTh-InMwTFyQ" name="db_accessadmin"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqsT_CEfGTh-InMwTFyQ" name="db_backupoperator"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqsj_CEfGTh-InMwTFyQ" name="db_datareader"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqsz_CEfGTh-InMwTFyQ" name="db_datawriter"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqtD_CEfGTh-InMwTFyQ" name="db_ddladmin"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqtT_CEfGTh-InMwTFyQ" name="db_denydatareader"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqtj_CEfGTh-InMwTFyQ" name="db_denydatawriter"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqtz_CEfGTh-InMwTFyQ" name="db_owner"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoquD_CEfGTh-InMwTFyQ" name="db_securityadmin"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoquT_CEfGTh-InMwTFyQ" name="dbo"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoquj_CEfGTh-InMwTFyQ" name="guest"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoquz_CEfGTh-InMwTFyQ" name="INFORMATION_SCHEMA"/>
+    <ownedElement xsi:type="orgomg.cwm.resource.relational:Schema" xmi:id="_vKoqvD_CEfGTh-InMwTFyQ" name="sys"/>
+  </orgomg.cwm.resource.relational:Catalog>
+</xmi:XMI>

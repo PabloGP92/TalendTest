@@ -1,0 +1,123 @@
+package routines;
+
+public class validadDocument {
+
+    // ===============================
+    // VALIDATE DOCUMENT GENERIC
+    // ===============================
+    public static boolean validateDocument(String type, String document){
+
+        if(document == null || type == null)
+            return false;
+
+        document = document.trim().toUpperCase();
+
+        if(type.equals("DNI"))
+            return validateDNI(document);
+
+        if(type.equals("NIE"))
+            return validateNIE(document);
+
+        if(type.equals("CIF"))
+            return validateCIF(document);
+
+        if(type.equals("VAT"))
+            return validateVAT(document);
+
+        return false;
+    }
+
+    // ===============================
+    // DNI VALIDATION
+    // ===============================
+    public static boolean validateDNI(String dni){
+
+        if(!dni.matches("\\d{8}[A-Z]"))
+            return false;
+
+        String letters = "TRWAGMYFPDXBNJZSQVHLCKE";
+        int number = Integer.parseInt(dni.substring(0,8));
+        char letter = letters.charAt(number % 23);
+
+        return dni.charAt(8) == letter;
+    }
+
+    // ===============================
+    // NIE VALIDATION
+    // ===============================
+    public static boolean validateNIE(String nie){
+
+        if(!nie.matches("[XYZ]\\d{7}[A-Z]"))
+            return false;
+
+        String prefix = nie.substring(0,1);
+        String numbers = "";
+
+        if(prefix.equals("X"))
+            numbers = "0" + nie.substring(1,8);
+        else if(prefix.equals("Y"))
+            numbers = "1" + nie.substring(1,8);
+        else
+            numbers = "2" + nie.substring(1,8);
+
+        String dniEquivalent = numbers + nie.substring(8);
+
+        return validateDNI(dniEquivalent);
+    }
+
+    // ===============================
+    // CIF VALIDATION
+    // ===============================
+    public static boolean validateCIF(String cif){
+
+        if(!cif.matches("^[ABCDEFGHJNPQRSUVW]\\d{7}[0-9A-J]$"))
+            return false;
+
+        char letter = cif.charAt(0);
+        String numbers = cif.substring(1,8);
+        char control = cif.charAt(8);
+
+        int sumA = 0;
+        int sumB = 0;
+
+        for(int i=0;i<numbers.length();i++){
+
+            int n = Character.getNumericValue(numbers.charAt(i));
+
+            if(i % 2 == 0){
+                int prod = n * 2;
+                sumA += prod/10 + prod%10;
+            } else {
+                sumB += n;
+            }
+        }
+
+        int total = sumA + sumB;
+        int digit = (10 - (total % 10)) % 10;
+
+        char controlDigit = (char)('0' + digit);
+        char controlLetter = "JABCDEFGHI".charAt(digit);
+
+        if("PQRSNW".indexOf(letter) >= 0)
+            return control == controlLetter;
+
+        if("ABEH".indexOf(letter) >= 0)
+            return control == controlDigit;
+
+        return control == controlDigit || control == controlLetter;
+    }
+
+    // ===============================
+    // VAT BASIC VALIDATION
+    // ===============================
+    public static boolean validateVAT(String vat){
+
+        if(vat == null)
+            return false;
+
+        vat = vat.replaceAll("\\s","");
+
+        return vat.matches("^[A-Z]{2}[A-Z0-9]{8,12}$");
+    }
+
+}

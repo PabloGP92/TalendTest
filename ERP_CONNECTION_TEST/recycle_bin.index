@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <recyclebin:RecycleBin xmlns:recyclebin="http://www.talend.org/recyclebin">
+  <deletedFolders>process/Migracion_Account</deletedFolders>
   <deletedItems id="_CkNmcCOTEfGAuaIZZFmorA" path="Fondos" type="PROCESS"/>
   <deletedItems id="_pbQzsCRQEfGSO4kgnzUp2Q" path="Fondos" type="PROCESS"/>
   <deletedItems id="_e_5XUCH7EfG3D-RU2AuquA" path="" type="RESOURCES"/>

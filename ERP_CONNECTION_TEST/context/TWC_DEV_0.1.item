@@ -7,4 +7,18 @@
   <contextParameter xmi:id="_s4HMlBJeEfGRkrHI23-GRg" comment="" name="sftp_user" prompt="sftp_user?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
   <contextParameter xmi:id="_s4HMlRJeEfGRkrHI23-GRg" comment="" name="sftp_password" prompt="sftp_password?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
   <contextParameter xmi:id="_s4HMlhJeEfGRkrHI23-GRg" comment="" name="sftp_remote_dir" prompt="sftp_remote_dir?" promptNeeded="false" repositoryContextId="built-in" type="id_String" value=""/>
+  <contextParameter xmi:id="_aT7iMHUjEfGmErRUTNv68Q" comment="" name="fileName_FT3" prompt="fileName_FT3?" promptNeeded="false" type="id_String" value="TWC NOTES FT 3"/>
+  <contextParameter xmi:id="_aT7iMXUjEfGmErRUTNv68Q" comment="" name="fileName_FT4" prompt="fileName_FT4?" promptNeeded="false" type="id_String" value="TWC NOTES FT 4"/>
+  <contextParameter xmi:id="_aT8JQHUjEfGmErRUTNv68Q" comment="" name="fileName_FT5" prompt="fileName_FT5?" promptNeeded="false" type="id_String" value="TWC NOTES FT 5"/>
+  <contextParameter xmi:id="_aT8JQXUjEfGmErRUTNv68Q" comment="" name="fileName_ALLANDALE" prompt="fileName_ALLANDALE?" promptNeeded="false" type="id_String" value="LFS ALLANDALE SARL A"/>
+  <contextParameter xmi:id="_E5yRkHXjEfG7JZlEoJf4Pg" comment="" name="outputPathNotesDEU" prompt="outputPathNotesDEU?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_E5yRkXXjEfG7JZlEoJf4Pg" comment="" name="outputPathAllandaleDEU" prompt="outputPathAllandaleDEU?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_E5yRknXjEfG7JZlEoJf4Pg" comment="" name="fund1" prompt="fund1?" promptNeeded="false" type="id_String" value="FUND1"/>
+  <contextParameter xmi:id="_E5yRk3XjEfG7JZlEoJf4Pg" comment="" name="fund2" prompt="fund2?" promptNeeded="false" type="id_String" value="FUND2"/>
+  <contextParameter xmi:id="_E5yRlHXjEfG7JZlEoJf4Pg" comment="" name="outputPathNotesACR" prompt="outputPathNotesACR?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_E5yRlXXjEfG7JZlEoJf4Pg" comment="" name="outputPathAllandaleACR" prompt="outputPathAllandaleACR?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_FoUykHXjEfG7JZlEoJf4Pg" comment="" name="fileNameNotesDEU" prompt="fileNameNotesDEU?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_FoUykXXjEfG7JZlEoJf4Pg" comment="" name="fileNameAllandaleDEU" prompt="fileNameAllandaleDEU?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_FoUyknXjEfG7JZlEoJf4Pg" comment="" name="fileNameNotesACR" prompt="fileNameNotesACR?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_FoUyk3XjEfG7JZlEoJf4Pg" comment="" name="fileNameAllandaleACR" prompt="fileNameAllandaleACR?" promptNeeded="false" type="id_String" value=""/>
 </talendfile:ContextType>
